@@ -124,8 +124,9 @@ function BottomAppBar() {
     if (document.hasFocus()) setTime(new Date());
   }, 1000);
   setInterval(() => {
+    const navigatorObj: any = navigator;
     if (document.hasFocus())
-      navigator.getBattery().then((res) => {
+      navigatorObj.getBattery().then((res) => {
         setBattery(res.level);
         setCharging(res.charging);
       });
