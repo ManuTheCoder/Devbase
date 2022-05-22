@@ -108,13 +108,7 @@ function Repositories(): JSX.Element {
               <ListItemText
                 primary={repo.name}
                 secondary={
-                  repo.description !== null
-                    ? repo.description.trim() === ""
-                      ? "No description provided"
-                      : repo.description.substring(0, 20) + repo.description >
-                        20
-                      ? "..."
-                      : ""
+                  repo.description ? repo.description.substring(0, 30)
                     : "No description provided"
                 }
               />
