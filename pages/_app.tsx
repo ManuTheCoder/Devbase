@@ -2,6 +2,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Head from "next/head";
 import { Layout } from "../components/Layout";
 import "../styles/globals.css";
+import dayjs from "dayjs"
+import relativeTime from "dayjs/plugin/relativeTime"
+dayjs.extend(relativeTime)
 
 export default function App({ Component, pageProps }: any): any {
   const theme = createTheme({

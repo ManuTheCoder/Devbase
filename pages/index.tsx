@@ -8,9 +8,61 @@ import { QuickLink } from "../components/QuickLink";
 import useSWR from "swr";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import Timeline from "@mui/lab/Timeline";
+import TimelineItem from "@mui/lab/TimelineItem";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineContent from "@mui/lab/TimelineContent";
+import TimelineDot from "@mui/lab/TimelineDot";
+import dayjs from "dayjs";
+
 const drawerWidth = 350;
 
-function Repositories():JSX.Element {
+function RecentChanges() {
+  const url = "https://api.github.com/repos/smartlist-app/smartlist/commits";
+  const { error, data } = useSWR(url, () =>
+    fetch(url).then((res) => res.json())
+  );
+  if (error) return <>An error occcured while fetching your history</>;
+  if (!data) {
+    return (
+      <>
+        {[...new Array(6)].map(() => (
+          <Skeleton
+            variant="rectangular"
+            height={80}
+            sx={{ borderRadius: 3, width: "100%", mt: 2 }}
+            animation="wave"
+          />
+        ))}
+      </>
+    );
+  }
+  return (
+    <>
+      <Timeline>
+        {data.map((commit) => (
+          <TimelineItem>
+            <TimelineSeparator sx={{ ml: -33 }}>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent sx={{ pl: 4, py: 1 }}>
+              <Typography gutterBottom sx={{ fontWeight: "800" }}>
+                {commit.commit.message}
+              </Typography>
+              <Typography variant="body2" gutterBottom>
+                {dayjs(commit.commit.author.date).fromNow()}
+              </Typography>
+            </TimelineContent>
+          </TimelineItem>
+        ))}
+      </Timeline>
+    </>
+  );
+}
+
+function Repositories(): JSX.Element {
   const url = "https://api.github.com/search/repositories?q=user:ManuTheCoder";
   const { error, data } = useSWR(url, () =>
     fetch(url).then((res) => res.json())
@@ -49,8 +101,8 @@ function Repositories():JSX.Element {
                   whiteSpace: "nowrap",
                   overflow: "hidden",
                   maxWidth: "100%",
-                  textOverflow: "ellipsis"
-                }
+                  textOverflow: "ellipsis",
+                },
               }}
             >
               <ListItemText
@@ -79,7 +131,7 @@ function ComingSoon() {
         background: "rgba(255,255,255,.2)",
         backdropFilter: "blur(10px)",
         borderRadius: 5,
-        my: 3
+        my: 3,
       }}
     ></Box>
   );
@@ -98,8 +150,8 @@ export default function Render() {
             backdropFilter: "blur(10px)",
             borderColor: "rgba(255,255,255,.1)",
             width: drawerWidth,
-            boxSizing: "border-box"
-          }
+            boxSizing: "border-box",
+          },
         }}
       >
         <Toolbar />
@@ -107,6 +159,7 @@ export default function Render() {
           <Typography className="font-heading" variant="h5">
             Recent changes
           </Typography>
+          <RecentChanges />
         </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

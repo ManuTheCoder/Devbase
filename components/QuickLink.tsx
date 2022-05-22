@@ -2,6 +2,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ListItemText from "@mui/material/ListItemText";
 import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 
 export function QuickLink({ name, href, icon }) {
@@ -26,7 +27,7 @@ export function QuickLink({ name, href, icon }) {
         <ListItemAvatar>
           <Avatar src={icon} />
         </ListItemAvatar>
-        <ListItemText primary={name} secondary={href} />
+        <ListItemText primary={<Typography sx={{fontWeight:"600"}}>{name}</Typography>} secondary={href} />
       </ListItem>
     </Grid>
   );
