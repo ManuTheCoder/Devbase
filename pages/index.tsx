@@ -10,12 +10,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 const drawerWidth = 350;
 
-function Repositories() {
+function Repositories():JSX.Element {
   const url = "https://api.github.com/search/repositories?q=user:ManuTheCoder";
   const { error, data } = useSWR(url, () =>
     fetch(url).then((res) => res.json())
   );
-  if (error) return "An error occcured while fetching your repositories";
+  if (error) return <>An error occcured while fetching your repositories</>;
   if (!data) {
     return (
       <Grid container spacing={2} sx={{ my: 2 }}>
