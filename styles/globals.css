@@ -25,3 +25,6 @@ body {
 .MuiTouchRipple-child {
   filter: opacity(0.2) !important;
 }
+.text-cyan {
+  color: #18ffff!important
+}

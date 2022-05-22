@@ -111,7 +111,10 @@ function Repositories(): JSX.Element {
                   repo.description !== null
                     ? repo.description.trim() === ""
                       ? "No description provided"
-                      : repo.description.substring(20)
+                      : repo.description.substring(0, 20) + repo.description >
+                        20
+                      ? "..."
+                      : ""
                     : "No description provided"
                 }
               />
@@ -156,7 +159,7 @@ export default function Render() {
       >
         <Toolbar />
         <Box sx={{ overflow: "auto", p: 3 }}>
-          <Typography className="font-heading" variant="h5">
+          <Typography className="font-heading text-cyan" variant="h5">
             Recent changes
           </Typography>
           <RecentChanges />
@@ -164,7 +167,7 @@ export default function Render() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
-        <Typography className="font-heading" variant="h5">
+        <Typography className="font-heading text-cyan" variant="h5">
           Quick links
         </Typography>
         <Grid container spacing={2} sx={{ mb: 3, mt: 0 }}>
@@ -189,11 +192,11 @@ export default function Render() {
             icon="https://avatars.githubusercontent.com/u/77016441?v=4"
           />
         </Grid>
-        <Typography className="font-heading" variant="h5">
+        <Typography className="font-heading text-cyan" variant="h5">
           Repositories
         </Typography>
         <Repositories />
-        <Typography className="font-heading" variant="h5">
+        <Typography className="font-heading text-cyan" variant="h5">
           News
         </Typography>
         <ComingSoon />
